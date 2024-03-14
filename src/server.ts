@@ -1,14 +1,22 @@
 import express, { Application } from 'express';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/userRoutes';
+import cookieParser from 'cookie-parser';
+
 
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
+
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+
 app.use('/users', userRoutes);
 
 app.listen(PORT, () => {

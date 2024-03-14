@@ -12,6 +12,7 @@ export class UserRepositoryImpl implements UserRepository {
     private constructor(connection: PoolConnection) {
         this.connectionManager = connection;
     }
+    
 
     static getInstance(connection: PoolConnection): UserRepositoryImpl {
         if (!UserRepositoryImpl.instance) {
@@ -39,6 +40,7 @@ export class UserRepositoryImpl implements UserRepository {
                             id: userRow.id,
                             username: userRow.username,
                             email: userRow.email,
+                            password: ""
                             // Include other user properties as needed
                         };
                         resolve(user);
@@ -50,7 +52,7 @@ export class UserRepositoryImpl implements UserRepository {
 
 
 
-    findByEmail(email: string): Promise<User | null> {
+    async findByEmail(email: string): Promise<User | null> {
 
         const connection = this.connectionManager;
 
@@ -71,8 +73,11 @@ export class UserRepositoryImpl implements UserRepository {
                             id: userRow.id,
                             username: userRow.username,
                             email: userRow.email,
+                            password: ""
                             // Include other user properties as needed
                         };
+                        console.log(user);
+                        
                         resolve(user);
                     }
                 }
@@ -95,4 +100,32 @@ export class UserRepositoryImpl implements UserRepository {
             });
         });
     }
+
+    async getUserConfigurations(id: string): Promise<any> {
+        try {
+            const connection = this.connectionManager;
+    
+            return new Promise((resolve, reject) => {
+                connection.query('SELECT configuration_name, configuration_value FROM configurations WHERE userId = ?', [id], (error, results: RowDataPacket[]) => {
+                    if (error) {
+                        console.error('Error fetching user configurations:', error);
+                        reject(new Error('Failed to fetch user configurations'));
+                    } else {
+                        const configMap: { [key: string]: string } = {}; // Define type for configMap
+                        results.forEach((row) => {
+                            configMap[row.configuration_name] = row.configuration_value;
+                        });
+                        resolve(configMap);
+                    }
+                });
+            });
+        } catch (error) {
+            console.error('Error fetching user configurations:', error);
+            throw new Error('Failed to fetch user configurations');
+        }
+    }
+    
+    
+    
+    
 }

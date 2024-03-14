@@ -13,4 +13,8 @@ export class UserService {
         
         return this.userRepositoryImpl.findByEmail(email);
     }
+
+    async getUserConfigurations(userId: string){
+        return this.userRepositoryImpl.getUserConfigurations(userId)
+    }
 }

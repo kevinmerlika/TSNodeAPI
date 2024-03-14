@@ -4,4 +4,5 @@ export interface UserRepository {
     findById(id: string): Promise<User | null>;
     findByEmail(email: string): Promise<User | null>;
     createUser(user: User): Promise<User>;
+    getUserConfigurations(id: String): Promise<any>
 }

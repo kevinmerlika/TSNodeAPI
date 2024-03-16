@@ -7,7 +7,7 @@ import { generateToken } from '../middlewares/jws';
 
 const userController = injectUserDependencies();
 
-router.get('/:email', userController.getUserByEmail.bind(userController));
+router.get('/getUserByEmail/:email', userController.getUserByEmail.bind(userController));
 router.post('/configurations', authenticateJWT ,userController.getUserConfigurations.bind(userController));
 // Login endpoint
 router.post('/login', (req, res, next) => {

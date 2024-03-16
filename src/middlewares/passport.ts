@@ -65,6 +65,13 @@ export function authenticateJWT(req: Request, res: Response, next: NextFunction)
                 }
             } else {
                 req.user = decoded; // Attach the decoded user information to the request object
+                if(decoded.userId != req.body.id){
+                    console.log(decoded.userId);
+                    console.log(req.body.id);
+                    
+                    
+                    return res.status(405).json({ message: 'Wrong User' });
+                }
                 console.log(decoded);
                 console.log('Issued At:', new Date(decoded.iat * 1000).toLocaleString());
                 console.log('Expires At:', new Date(decoded.exp * 1000).toLocaleString());

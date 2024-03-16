@@ -3,9 +3,7 @@ import { User } from '../entities/user/user';
 import { UserRepositoryImpl } from '../repositories/userRepositoryImpl';
 
 export class UserService {
-    constructor(private userRepositoryImpl: UserRepositoryImpl) {
-        console.log("creating userservice");
-        
+    constructor(private userRepositoryImpl: UserRepositoryImpl) {        
     }
 
     async getUserByEmail(email: string): Promise<User | null> {

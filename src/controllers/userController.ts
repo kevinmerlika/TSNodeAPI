@@ -3,9 +3,7 @@ import { UserService } from '../services/userService';
 
 export class UserController {
 
-     public constructor(public userService: UserService) {
-        console.log("user service created");
-        
+     public constructor(public userService: UserService) {        
     }
 
     async getUserByEmail(req: Request, res: Response): Promise<void> {
